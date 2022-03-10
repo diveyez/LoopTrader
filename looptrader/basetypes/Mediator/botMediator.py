@@ -223,11 +223,14 @@ class Bot(Mediator):
         Returns:
             Broker: Associated Broker object
         """
-        for strategy, broker in self.brokerstrategy.items():
-            if strategy.strategy_id == strategy_id:
-                return broker
-
-        return None
+        return next(
+            (
+                broker
+                for strategy, broker in self.brokerstrategy.items()
+                if strategy.strategy_id == strategy_id
+            ),
+            None,
+        )
 
     def get_all_strategies(self) -> list[str]:
         strategies = list[str]()

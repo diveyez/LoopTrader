@@ -410,8 +410,9 @@ class SingleByDeltaStrategy(Strategy, Component):
     def cancel_order(self, order_id: int):
         # Build Request
         cancelorderrequest = baseRR.CancelOrderRequestMessage(
-            self.strategy_id, int(order_id)
+            self.strategy_id, order_id
         )
+
         # Send Request
         self.mediator.cancel_order(cancelorderrequest)
 
@@ -592,7 +593,7 @@ class SingleByDeltaStrategy(Strategy, Component):
         """Checks an option chain response for the next expiration date."""
         logger.debug("get_next_expiration")
 
-        if expirations is None or expirations == []:
+        if expirations is None or not expirations:
             logger.error("No expirations provided.")
             return None
 

@@ -35,7 +35,7 @@ class ormDatabase(Database):
     )
 
     def __attrs_post_init__(self):
-        self.connection_string = "sqlite:///" + self.db_filename
+        self.connection_string = f"sqlite:///{self.db_filename}"
         self.pre_flight_db_check()
 
     ##################
