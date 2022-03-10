@@ -111,12 +111,14 @@ class LongSharesStrategy(Strategy, Component):
             logger.error("Failed to get quote for {}.".format(self.underlying))
             return
 
-        # Find Current Share Holding
-        current_position = 0
-        for position in account.positions:
-            if position.symbol == self.underlying:
-                current_position = position.longquantity
-                break
+        current_position = next(
+            (
+                position.longquantity
+                for position in account.positions
+                if position.symbol == self.underlying
+            ),
+            0,
+        )
 
         # Calculate share delta, rounded to 100
         target_value = (
